@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        *{ margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+    nav ul{ display: flex; list-style: none; }
+    nav li{ margin: 10px 20px; }
+    h1{ margin: 50px 20px; }
+    a, button{ background-color: transparent; border: none; color: blue; text-decoration: none; 
+        font-size: 16px; cursor: pointer; }
+    .Q2{ margin-top: 50px; padding: 20px; }
+    .msg-box{ display: none; position: fixed; background-color: #ddd; border: 2px solid #aaa;
+        right: 50px; top: 50px; bottom: 50px; width: 300px; border-radius: 10px; padding: 20px; }
+    #chat-box{ padding: 20px 0; }
+    .msg{ background-color: white; padding: 5px; border-radius: 0 10px 10px 10px; margin: 0 30px 20px 0;}
+
+    </style>
+    <script src="/socket.io.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="msg-box" id="msg-box">
+        <h3>Chat Support</h3>
+        <div id="chat-box">
+            
+        </div>
+    </div>
+
+    <a href="#Homepage" >Homepage</a>
+    <a href ="Contact US">Contact US</a>
+    <a href="#support" onclick="mySupport()">Support</a>
+
+    <script>
+        const socket = io('http://localhost:3005/')
+
+
+
+        // message from the server 
+        const msgbox = document.getElementById('msg-box')
+        const chatbox = document.getElementById('chat-box')
+    
+
+        socket.on('serverMessage',(message)=>{
+            msgbox.style.display = 'block'
+            const div = document.createElement('div')
+            div.classList.add('msg')
+            div.innerText = message
+            chatbox.appendChild(div)
+
+        })
+     
+       const mySupport = ()=>{
+        socket.emit('support')
+       }
+
+
+    </script>
+    
+</body>
+</html>
